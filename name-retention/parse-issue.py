@@ -14,6 +14,7 @@ CYAN = '\033[36m'
 INTENSE = '\033[1m'
 RED = '\033[31m'
 GREEN = '\033[32m'
+YELLOW = '\033[32m'
 RESET = '\033[m'
 
 parser = argparse.ArgumentParser(
@@ -43,13 +44,16 @@ if match := re.search(r'`USER_NAME`:\s*https://pypi.org/user/([^ \n]+)', request
 elif match := re.search(r'`USER_NAME`:\s*([-_a-zA-Z0-9]+)', request_text):
     CANDIDATE = match[1]
 
-pypi_api_data = {}
+pypi_api_info = {}
 if 'PROJECT' in globals():
     if not re.fullmatch('[a-zA-Z0-9_.-]+', PROJECT):
         raise ValueError(PROJECT)
     PYPI_URL = f'https://pypi.org/project/{PROJECT}/'
-    with urlopen(f'https://pypi.org/pypi/{PROJECT}/json') as page:
-        pypi_api_info = json.load(page).get('info', {})
+    try:
+        with urlopen(f'https://pypi.org/pypi/{PROJECT}/json') as page:
+            pypi_api_info = json.load(page).get('info', {})
+    except urllib.error.HTTPError:
+        pass
     PROJECT_AUTHOR_ADDRESS = pypi_api_info.get('author_email')
 
 with open('README.md') as readme_file:
