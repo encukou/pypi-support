@@ -44,6 +44,7 @@ if match := re.search(r'`USER_NAME`:\s*https://pypi.org/user/([^ \n]+)', request
 elif match := re.search(r'`USER_NAME`:\s*([-_a-zA-Z0-9]+)', request_text):
     CANDIDATE = match[1]
 
+pypi_api_data = {}
 pypi_api_info = {}
 if 'PROJECT' in globals():
     PROJECT = PROJECT.strip()
@@ -52,7 +53,8 @@ if 'PROJECT' in globals():
     PYPI_URL = f'https://pypi.org/project/{PROJECT}/'
     try:
         with urlopen(f'https://pypi.org/pypi/{PROJECT}/json') as page:
-            pypi_api_info = json.load(page).get('info', {})
+            pypi_api_data = json.load(page)
+            pypi_api_info = pypi_api_data.get('info', {})
     except urllib.error.HTTPError:
         pass
     PROJECT_AUTHOR_ADDRESS = pypi_api_info.get('author_email')
@@ -94,6 +96,14 @@ else:
         pp(stats)
 
 print('Home page:', pypi_api_info.get('home_page'))
+try:
+    last_upload_time = max(upload['upload_time_iso_8601']
+                           for release in pypi_api_data['releases'].values()
+                           for upload in release)
+    print('Last upload:', last_upload_time)
+except (IndexError, ValueError):
+    pass
+
 
 # TODO Add to process diagram:
 #
