@@ -30,14 +30,14 @@ with urlopen(SUPPORT_ISSUE_URL) as page:
     info = json.load(page)
     request_text = info['body']
 
-if match := re.search(r'`(.+)`:\s*https://pypi.org/project/\1', request_text):
+if match := re.search(r'`(.+)`:\s*https://pypi.org/project/\1', request_text, re.I):
     PROJECT = match[1]
 if match := re.search(r'`PROJECT_NAME`:\s*https://pypi.org/project/([^ \n]+)', request_text):
     PROJECT = match[1]
 elif match := re.search(r'`PROJECT_NAME`:\s*([-_a-zA-Z0-9]+)', request_text):
     PROJECT = match[1]
 
-if match := re.search(r'`(.+)`:\s*https://pypi.org/user/\1', request_text):
+if match := re.search(r'`(.+)`:\s*https://pypi.org/user/\1', request_text, re.I):
     CANDIDATE = match[1]
 if match := re.search(r'`USER_NAME`:\s*https://pypi.org/user/([^ \n]+)', request_text):
     CANDIDATE = match[1]
