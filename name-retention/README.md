@@ -170,6 +170,15 @@ Add one of the following notes and the common end:
     taken. Final determination will be made by the PyPI Administrators when our
     process is complete.
 
+### Initial Response - invalid project
+
+    We are working to contact the owner.
+
+    Disclaimer: We are providing support to the PyPI Administrators to validate
+    this request and make a recommendation on the outcome and actions to be
+    taken. Final determination will be made by the PyPI Administrators when our
+    process is complete.
+
 ### Remove invalid project; name available
 
     $PROJECT has been deemed invalid. Additionally, the owner {did not

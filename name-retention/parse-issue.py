@@ -14,7 +14,7 @@ CYAN = '\033[36m'
 INTENSE = '\033[1m'
 RED = '\033[31m'
 GREEN = '\033[32m'
-YELLOW = '\033[32m'
+YELLOW = '\033[33m'
 RESET = '\033[m'
 
 parser = argparse.ArgumentParser(
@@ -69,7 +69,10 @@ for line in template.safe_substitute(Replacements()).splitlines():
     if line.startswith('##'):
         print(f'{CYAN}{line}{RESET}')
     else:
-        line = line.removeprefix('    ')
+        if line.startswith('    '):
+            line = line.removeprefix('    ')
+        else:
+            line = f'{YELLOW}{line}{RESET}'
         line = re.sub('([{|}])', fr'{RED}{INTENSE}\1{RESET}', line)
         print(line)
 
