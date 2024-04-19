@@ -46,6 +46,7 @@ elif match := re.search(r'`USER_NAME`:\s*([-_a-zA-Z0-9]+)', request_text):
 
 pypi_api_info = {}
 if 'PROJECT' in globals():
+    PROJECT = PROJECT.strip()
     if not re.fullmatch('[a-zA-Z0-9_.-]+', PROJECT):
         raise ValueError(PROJECT)
     PYPI_URL = f'https://pypi.org/project/{PROJECT}/'
