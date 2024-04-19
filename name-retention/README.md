@@ -52,11 +52,11 @@ SPEC[[Special case]]
 ### Reachability -- abandoned project
 
     To: $PYPI_USER_ADDRESS, $PROJECT_AUTHOR_ADDRESS, $UPLOADER_ADDRESS, $ADDRESS_FROM_DOCS
-    Subject: ACTION REQUIRED: PyPI $PROJECT name retention
+    Subject: ACTION REQUIRED: PyPI project "$PROJECT" name retention
 
     Hello $NAME,
 
-    Your project $PROJECT at $PYPI_URL appears to be abandoned, and $CANDIDATE
+    Your project "$PROJECT" at $PYPI_URL appears to be abandoned, and $CANDIDATE
     has requested {transferring ownership to them in order to continue
     maintaining it|to reuse the name for another project}.
     See $SUPPORT_ISSUE_URL for details.
@@ -96,11 +96,11 @@ Add one of the following notes and the common end:
 ### Transfer notice for abandoned project
 
     To: $PYPI_USER_ADDRESS, $PROJECT_AUTHOR_ADDRESS, $UPLOADER_ADDRESS, $ADDRESS_FROM_DOCS
-    Subject: ACTION REQUIRED: PyPI $PROJECT name retention
+    Subject: ACTION REQUIRED: PyPI project "$PROJECT" name retention
 
     Hello $NAME,
 
-    Your project $PROJECT at $PYPI_URL appears to be abandoned, and
+    Your project "$PROJECT" at $PYPI_URL appears to be abandoned, and
     $CANDIDATE has requested {transferring ownership to them in order to
     continue maintaining it|to reuse the name for another project}.
     See $SUPPORT_ISSUE_URL for details.
@@ -116,11 +116,11 @@ Add one of the following notes and the common end:
 ### Courtesy notice for invalid project -- name squatting
 
     To: $PYPI_USER_ADDRESS, $PROJECT_AUTHOR_ADDRESS, $UPLOADER_ADDRESS, $ADDRESS_FROM_DOCS, any additional mail we find
-    Subject: ACTION REQUIRED: PyPI $PROJECT name retention
+    Subject: ACTION REQUIRED: PyPI project "$PROJECT" name retention
 
     Hello $NAME,
 
-    Your project $PROJECT at $PYPI_URL {is empty|has no functionality}.
+    Your project "$PROJECT" at $PYPI_URL {is empty|has no functionality}.
     Per the package index name retention policy (https://peps.python.org/pep-0541/),
     we consider such projects to be name squatting, and will remove them from
     the index.
@@ -135,11 +135,11 @@ Add one of the following notes and the common end:
 ### Removal notice for invalid project -- name squatting
 
     To: $PYPI_USER_ADDRESS, $PROJECT_AUTHOR_ADDRESS, $UPLOADER_ADDRESS, $ADDRESS_FROM_DOCS, any additional mail we find
-    Subject: Notice: PyPI $PROJECT may be removed
+    Subject: Notice: PyPI project "$PROJECT" may be removed
 
     Hello $NAME,
 
-    Your project $PROJECT at $PYPI_URL {is empty|has no functionality} for an
+    Your project "$PROJECT" at $PYPI_URL {is empty|has no functionality} for an
     extended period of time. Per the package index name retention policy
     (https://peps.python.org/pep-0541/), we consider such projects to be name
     squatting.
@@ -181,7 +181,7 @@ Add one of the following notes and the common end:
 
 ### Remove invalid project; name available
 
-    $PROJECT has been deemed invalid. Additionally, the owner {did not
+    The project "$PROJECT" has been deemed invalid. Additionally, the owner {did not
     respond|did not fix the issue} in a week.
     We recommend that the PyPI Administrators delete the project and make the
     name available for registration.
@@ -196,14 +196,14 @@ Add one of the following notes and the common end:
 
     $OWNER responded to our email and said we should transfer the project,
     so we recommend that the PyPI Administrators assign $CANDIDATE as the new
-    owner of $PROJECT.
+    owner of "$PROJECT".
 
 ### Transfer abandoned project
 
     We could not reach $OWNER, and we consider the project abandoned per
     [PEP 541](https://peps.python.org/pep-0541/#abandoned-projects).
     We recommend that the PyPI Administrators assign $CANDIDATE as the new
-    owner of $PROJECT.
+    owner of "$PROJECT".
 
 ### Abandoned project - why not use a different name?
 
