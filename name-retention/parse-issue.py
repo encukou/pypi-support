@@ -7,6 +7,7 @@ import string
 from pprint import pp
 
 # Useful links:
+# - https://github.com/pypi/support/tree/main/name-retention
 # - https://github.com/pypi/support/projects/1
 # - https://github.com/pypi/support/issues?q=is%3Aissue+is%3Aopen+label%3A%22PEP+541%22
 
