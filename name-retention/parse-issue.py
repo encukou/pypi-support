@@ -7,6 +7,11 @@ import string
 from pprint import pp
 from textwrap import dedent
 
+from textual.app import App
+from textual.widgets import Header, Footer, OptionList, TextArea, Button
+from textual import on
+import pyperclip
+
 # Useful links:
 # - https://github.com/pypi/support/tree/main/name-retention
 # - https://github.com/pypi/support/projects/1
@@ -65,7 +70,7 @@ templates = {}
 with open('README.md') as readme_file:
     for line in readme_file:
         if line.startswith('#'):
-            current_section = line
+            current_section = line.strip()
             assert current_section not in templates
             templates[current_section] = []
         else:
@@ -111,6 +116,32 @@ try:
     print('Last upload:', last_upload_time)
 except (IndexError, ValueError):
     pass
+
+
+class SupportApp(App):
+    def compose(self):
+        yield Header()
+        yield OptionList(*templates)
+        yield Button("copy", id="copy")
+        yield TextArea("foo bar", id='text')
+        yield Footer()
+
+    @on(OptionList.OptionHighlighted)
+    @on(OptionList.OptionSelected)
+    def selected(self, msg):
+        template = templates[msg.option.prompt]
+        content = template.safe_substitute(Replacements())
+        content = re.sub('([{|}])', fr'{RED}{INTENSE}\1{RESET}', content)
+        self.query_one("#text", TextArea).text = content
+
+    @on(Button.Pressed)
+    def clicked(self, msg):
+        content = self.query_one("#text", TextArea).text
+        pyperclip.copy(content)
+
+if __name__ == "__main__":
+    app = SupportApp()
+    app.run()
 
 # TODO Add to process diagram:
 #
