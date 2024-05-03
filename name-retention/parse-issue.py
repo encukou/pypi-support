@@ -5,6 +5,7 @@ import re
 import json
 import string
 from pprint import pp
+from textwrap import dedent
 
 # Useful links:
 # - https://github.com/pypi/support/tree/main/name-retention
@@ -60,8 +61,19 @@ if 'PROJECT' in globals():
         pass
     PROJECT_AUTHOR_ADDRESS = pypi_api_info.get('author_email')
 
+templates = {}
 with open('README.md') as readme_file:
-    template = string.Template(readme_file.read())
+    for line in readme_file:
+        if line.startswith('#'):
+            current_section = line
+            assert current_section not in templates
+            templates[current_section] = []
+        else:
+            templates[current_section].append(line)
+identifiers = set()
+for section, lines in templates.items():
+    templates[section] = string.Template(dedent(''.join(lines)))
+    identifiers.update(templates[section].get_identifiers())
 
 class Replacements:
     def __getitem__(self, name):
@@ -69,16 +81,11 @@ class Replacements:
             return f'{GREEN}{value}{RESET}'
         return f'{RED}{INTENSE}{name}{RESET}'
 
-for line in template.safe_substitute(Replacements()).splitlines():
-    if line.startswith('##'):
-        print(f'{CYAN}{line}{RESET}')
-    else:
-        if line.startswith('    '):
-            line = line.removeprefix('    ')
-        else:
-            line = f'{YELLOW}{line}{RESET}'
-        line = re.sub('([{|}])', fr'{RED}{INTENSE}\1{RESET}', line)
-        print(line)
+for section, template in templates.items():
+    print(f'{CYAN}{section}{RESET}')
+    content = template.safe_substitute(Replacements())
+    content = re.sub('([{|}])', fr'{RED}{INTENSE}\1{RESET}', content)
+    print(content)
 
 
 try:
@@ -104,7 +111,6 @@ try:
     print('Last upload:', last_upload_time)
 except (IndexError, ValueError):
     pass
-
 
 # TODO Add to process diagram:
 #

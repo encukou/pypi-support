@@ -72,17 +72,15 @@ SPEC[[Special case]]
     yourself: go to https://pypi.org/manage/project/$PROJECT/collaboration/,
     log in, and invite $CANDIDATE as an Owner.
 
-Add one of the following notes and the common end:
-
-#### ... attempt #1
+#### [1/3] attempt #1
 
     (nothing to add)
 
-#### ... attempt #2
+#### [2/3] attempt #2
 
     This is our second attempt to reach you. We tried two weeks ago.
 
-#### ... attempt #3
+#### [3/3] attempt #3
 
     This is our third and final attempt to reach you. If you do not reply in
     two weeks, we will recommend that the PyPI Administrators transfer
