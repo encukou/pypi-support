@@ -45,7 +45,7 @@ elif match := re.search(r'`PROJECT_NAME`:\s*([-_a-zA-Z0-9]+)', request_text):
 
 if match := re.search(r'`(.+)`:\s*https://pypi.org/user/\1', request_text, re.I):
     CANDIDATE = match[1]
-if match := re.search(r'`USER_NAME`:\s*https://pypi.org/user/([^ \n]+)/?', request_text):
+if match := re.search(r'`USER_NAME`:\s*https://pypi.org/user/([^ \r\n]+)/?', request_text):
     CANDIDATE = match[1]
 elif match := re.search(r'`USER_NAME`:\s*([-_a-zA-Z0-9]+)', request_text):
     CANDIDATE = match[1]
@@ -113,7 +113,7 @@ try:
                            for release in pypi_api_data['releases'].values()
                            for upload in release)
     print('Last upload:', last_upload_time)
-except (IndexError, ValueError):
+except (IndexError, ValueError, KeyError):
     pass
 
 
