@@ -6,15 +6,12 @@ import json
 import string
 from pprint import pp
 from textwrap import dedent
+import subprocess
 
-from textual.app import App
-from textual.widgets import Header, Footer, OptionList, TextArea, Button
-from textual import on
-import pyperclip
 
 # Useful links:
 # - https://github.com/pypi/support/tree/main/name-retention
-# - https://github.com/pypi/support/projects/1
+# - https://github.com/orgs/pypi/projects/3
 # - https://github.com/pypi/support/issues?q=is%3Aissue+is%3Aopen+label%3A%22PEP+541%22
 
 CYAN = '\033[36m'
@@ -32,8 +29,10 @@ parser.add_argument('issue_number', type=int)
 
 args = parser.parse_args()
 
-SUPPORT_ISSUE_URL = f'https://api.github.com/repos/pypi/support/issues/{args.issue_number}'
-with urlopen(SUPPORT_ISSUE_URL) as page:
+
+API_ISSUE_URL = f'https://api.github.com/repos/pypi/support/issues/{args.issue_number}'
+SUPPORT_ISSUE_URL = f'https://github.com/pypi/support/issues/{args.issue_number}'
+with urlopen(API_ISSUE_URL) as page:
     info = json.load(page)
     request_text = info['body']
 
@@ -118,6 +117,12 @@ except (IndexError, ValueError):
     pass
 
 
+"""
+# TODO: make an app
+from textual.app import App
+from textual.widgets import Header, Footer, OptionList, TextArea, Button
+from textual import on
+
 class SupportApp(App):
     def compose(self):
         yield Header()
@@ -137,14 +142,14 @@ class SupportApp(App):
     @on(Button.Pressed)
     def clicked(self, msg):
         content = self.query_one("#text", TextArea).text
-        pyperclip.copy(content)
+        # This is Linux-specific; neither Textual's `copy_to_clipboard` nor
+        # `pyperclip` worked for me :(
+        subprocess.run(['xsel', '-s', '-b', '-i'], input=content.encode('utf-8'), check=True)
 
 if __name__ == "__main__":
     app = SupportApp()
     app.run()
+"""
 
-# TODO Add to process diagram:
-#
-# https://github.com/pypi/support/issues/2554
 
-# TODO: invalid project -- Initial Response -- no more details.
+# TODO: Check activity befor admin recommendations

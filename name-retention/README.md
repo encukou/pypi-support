@@ -23,7 +23,8 @@ NEW_funct --> |no functionality| SQUAT
 NEW_funct --> |some functionality| NEW_what{{What is the request?}}
 NEW_what --> |Transfer for continued maintenance| ABTR
 NEW_what --> |Replace with a different project| NEW_whyname[Comment “Abandoned project - why not use a different name?”]
-NEW_whyname --> NEW_tbd
+NEW_whyname --> |other| NEW_tbd
+NEW_whyname --> |no response for a month| NEW_whyname_no_response[[Close issue]]
 subgraph SQUAT_subgraph [Invalid project: Name squatting]
     SQUAT[[Name squatting removal]] --> SQUAT_c[Send “Courtesy notice for invalid project -- name squatting”] --> SQUAT_w[Wait a week] --> SQUAT_r{{Did owner respond?}} --> |yes| SQUAT_tbd(((TBD)))
     SQUAT_r --> |no| SQUAT_s[Send “Removal notice for invalid project -- name squatting”] --> SQUAT_g[Comment “Invalid project removed; name available”]
@@ -49,12 +50,19 @@ SPEC[[Special case]]
 
 ## Email templates
 
+### Prefix for colleagues of someone who's reportedly passed away
+
+    We have ​been notified that $OWNER has passed away. Unfortunately, we have
+    no way to verify this, and we need to follow a standard process to
+    determine if they are reachable by e-mail.
+    If you can confirm this information, please let us know.
+
 ### Reachability -- abandoned project
 
     To: $PYPI_USER_ADDRESS, $PROJECT_AUTHOR_ADDRESS, $UPLOADER_ADDRESS, $ADDRESS_FROM_DOCS
     Subject: ACTION REQUIRED: PyPI project "$PROJECT" name retention
 
-    Hello $NAME,
+    Hello $OWNER_NAME,
 
     Your project "$PROJECT" at $PYPI_URL appears to be abandoned, and $CANDIDATE
     has requested {transferring ownership to them in order to continue
@@ -84,7 +92,7 @@ SPEC[[Special case]]
 
     This is our third and final attempt to reach you. If you do not reply in
     two weeks, we will recommend that the PyPI Administrators transfer
-    ownership of PROJECT to CANDIDATE.
+    ownership of "$PROJECT" to $CANDIDATE.
 
 #### common end
 
@@ -94,9 +102,9 @@ SPEC[[Special case]]
 ### Transfer notice for abandoned project
 
     To: $PYPI_USER_ADDRESS, $PROJECT_AUTHOR_ADDRESS, $UPLOADER_ADDRESS, $ADDRESS_FROM_DOCS
-    Subject: ACTION REQUIRED: PyPI project "$PROJECT" name retention
+    Subject: PyPI project "$PROJECT" name retention
 
-    Hello $NAME,
+    Hello $OWNER,
 
     Your project "$PROJECT" at $PYPI_URL appears to be abandoned, and
     $CANDIDATE has requested {transferring ownership to them in order to
@@ -116,7 +124,7 @@ SPEC[[Special case]]
     To: $PYPI_USER_ADDRESS, $PROJECT_AUTHOR_ADDRESS, $UPLOADER_ADDRESS, $ADDRESS_FROM_DOCS, any additional mail we find
     Subject: ACTION REQUIRED: PyPI project "$PROJECT" name retention
 
-    Hello $NAME,
+    Hello $OWNER,
 
     Your project "$PROJECT" at $PYPI_URL {is empty|has no functionality}.
     Per the package index name retention policy (https://peps.python.org/pep-0541/),
@@ -135,7 +143,7 @@ SPEC[[Special case]]
     To: $PYPI_USER_ADDRESS, $PROJECT_AUTHOR_ADDRESS, $UPLOADER_ADDRESS, $ADDRESS_FROM_DOCS, any additional mail we find
     Subject: Notice: PyPI project "$PROJECT" may be removed
 
-    Hello $NAME,
+    Hello $OWNER,
 
     Your project "$PROJECT" at $PYPI_URL {is empty|has no functionality} for an
     extended period of time. Per the package index name retention policy
